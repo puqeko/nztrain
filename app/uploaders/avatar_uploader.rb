@@ -3,7 +3,16 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   include CarrierWave::RMagick
-  include CarrierWave::MimeTypes
+  
+  # we replicate this idea of generic types from CarrierWave::MimeTypes
+GENERIC_CONTENT_TYPES = %w[application/octet-stream binary/octet-stream]
+
+# and add a clearing method to our uploader processor
+process :clear_generic_content_type
+
+def clear_generic_content_type
+  file.content_type = nil if GENERIC_CONTENT_TYPES.include?(file.try(:content_type))
+end
 
   # Choose what kind of storage to use for this uploader:
   storage :file

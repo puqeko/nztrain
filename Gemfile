@@ -1,45 +1,45 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 4.0.0'
+gem 'rails'
 
 gem 'nzic_models', github: 'NZOI/nzic_models'
 #gem 'nzic_models', path: '../../nzic/nzic_models'
 
-gem 'devise', '~> 3.2.2'
-gem 'psych', '~> 2.0.2' # part of stdlib, need newer version for safe_load
+gem 'devise'
+gem 'psych' # part of stdlib, need newer version for safe_load
 
 # change back to cookie-based store (encrypted)
 gem 'activerecord-session_store'
 
-gem 'rubyzip', '1.1.0'
+gem 'rubyzip'
 
-gem 'jquery-rails', '~> 3.0.4'
-gem 'jquery-ui-rails', '4.0.5'
-gem 'jquery-historyjs', '0.2.3'
-gem 'superfish-rails', '~> 1.6.0'
+gem 'jquery-rails'
+gem 'jquery-ui-rails', '~> 4.0'
+gem 'jquery-historyjs'
+gem 'superfish-rails'
 
 gem 'forem', github: 'radar/forem', branch: 'rails4'
 gem 'forem-redcarpet', github: 'NZOI/forem-redcarpet'
 
-gem "nokogiri", '~> 1.6.0'
+gem "nokogiri"
 gem 'redcarpet'
-#gem 'rmagick', '2.13.2'
-gem 'rmagick'
-gem 'carrierwave', '0.9.0'
+gem 'rmagick'#, '2.13.2'
+#gem 'rmagick'
+gem 'carrierwave'
 gem 'will_paginate'
 gem 'has_scope'
-gem 'pundit', '0.2.1'
+gem 'pundit'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'loofah'
 gem 'whenever', :require => false # for cron jobs
 gem 'squeel'#, '~> 1.1.1' # until version 1.1.2 released
 gem 'tilt'
-gem 'simple-navigation', '3.11.0'
-gem 'simple_form', '3.0.1'
+gem 'simple-navigation'
+gem 'simple_form'
 gem 'facebox-rails'
-gem 'strong_presenter', '~> 0.2.2'
+gem 'strong_presenter'
 gem 'render_anywhere'
-gem 'pygments.rb', '0.5.4'
+gem 'pygments.rb'
 gem 'ranked-model', :github => 'mixonic/ranked-model'
 gem 'pdf-reader'
 gem 'mechanize'
@@ -55,13 +55,13 @@ gem 'world-flags'
 gem 'jquery-final_countdown-rails'
 gem 'ruby-duration'
 
-gem 'pg'
+gem 'pg', '< 1.0'
 gem 'backup'
 
 # Redis and Background Processing
-gem 'redis', '< 4.0'
-gem 'rake', '< 11.0' # pinned to avoid last_comment issue
-gem 'qless'#, :github => 'ronalchn/qless', :branch => 'nztrain'
+gem 'redis'
+gem 'rake' # pinned to avoid last_comment issue
+gem 'qless' #, :github => 'ronalchn/qless', :branch => 'nztrain'
 gem 'connection_pool'
 gem 'sinatra'
 
@@ -84,7 +84,7 @@ end
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'rspec-rails', '~> 2.0'
+  gem 'rspec-rails'
   gem 'test-unit'
   gem 'capybara'
   gem 'capybara-email'
@@ -104,9 +104,9 @@ end
 gem 'sass'
 gem 'sass-rails'
 gem 'coffee-rails'
-gem 'uglifier', '>=1.0.3'
-gem 'libv8', '~> 3.3'
-gem 'therubyracer', '~> 0.11' # required for the execjs gem (dependency)
+gem 'uglifier'
+gem 'libv8'
+gem 'therubyracer' # required for the execjs gem (dependency)
 gem 'yui-compressor'
 #end
 

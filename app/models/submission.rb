@@ -87,7 +87,7 @@ class Submission < ActiveRecord::Base
   end
 
   # scopes (lazy running SQL queries)
-  scope :distinct, -> { select("distinct(submissions.id), submissions.*") }
+  scope :distinct_s, -> { select("distinct(submissions.id), submissions.*") }
 
   def self.by_user(user_id)
     where("submissions.user_id IN (?)", user_id.to_s.split(','))

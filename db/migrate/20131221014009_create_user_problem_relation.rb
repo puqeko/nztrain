@@ -41,7 +41,7 @@ class CreateUserProblemRelation < ActiveRecord::Migration
 
     reversible do |dir|
       dir.up do
-        Submission.select([:user_id, :problem_id]).distinct.each do |submission|
+        Submission.select([:user_id, :problem_id]).distinct_s.each do |submission|
           relation = UserProblemRelation.where(:user_id => submission[:user_id], :problem_id => submission[:problem_id]).first_or_create!
           relation.recalculate_and_save
           relation.first_viewed_at = relation.submissions.minimum(:created_at)

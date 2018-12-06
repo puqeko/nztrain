@@ -10,7 +10,7 @@ class TestCase < ActiveRecord::Base
     errors.add :output, "cannot be nil" if output.nil?
   end
 
-  scope :distinct, -> { select("distinct(test_cases.id), test_cases.*") }
+  scope :distinct_s, -> { select("distinct(test_cases.id), test_cases.*") }
 
   include RankedModel
   ranks :problem_order, with_same: :problem_id

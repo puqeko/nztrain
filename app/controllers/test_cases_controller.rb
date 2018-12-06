@@ -18,7 +18,7 @@ class TestCasesController < ApplicationController
       @test_cases = @problem.test_cases
     else
       raise Pundit::NotAuthorizedError
-      @test_cases = @test_cases.distinct
+      @test_cases = @test_cases.distinct_s
     end
     
     respond_to do |format|

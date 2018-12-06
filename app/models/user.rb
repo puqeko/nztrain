@@ -17,7 +17,6 @@ class User < ActiveRecord::Base
 
   before_save do
     self.can_change_username = false if self.username_changed? # can only change username once
-    return true
   end
 
   has_many :problems

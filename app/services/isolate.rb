@@ -203,6 +203,7 @@ EOF
 
   def sandbox_command command, options = {}
     boxcmd = ["isolate","-b#{@box_id}"] + directory_bindings(options.extract!(:noexec)) + sandbox_options(extract_resource(options)) + environment + ["--run","--"]
+    options = {}  # TEMP: since customer evals causing implicit Hash to String conversion
     yield boxcmd + process_command(command), options
   end
 

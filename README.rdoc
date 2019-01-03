@@ -3,13 +3,21 @@ Status: {<img src="https://secure.travis-ci.org/NZOI/nztrain.png?branch=master" 
 Workflow: {<img src="https://badge.waffle.io/NZOI/nztrain.png" alt="WIP Issues" />}[http://waffle.io/NZOI/nztrain]
 
 === Installation
-Run `script/install.bash` to install dependencies.
+Currently on Ubuntu 16.04.
+
+Install ruby 2.3 with {RVM}[https://github.com/rvm/ubuntu_rvm].
+
+Run `script/install.bash` to install dependencies. Leave everything default for development.
 
 `script/update.bash` will pull changes from origin and recompile various things. This includes assets - assuming that it is for production purposes.
 
 Both scripts depends on `script/install.cfg`, which is built using `script/install/config.bash` automatically. If `script/install.cfg` is incomplete (eg. new configuration is added), `script/install.bash` and `script/update.bash` will prompt for the new configurations required.
 
+Run tests: `bundle exec rake db:test:load` then `bundle exec spec`
+Run server: `bundle exec rails server`
+Run judge: `bundle exec rake qless:work`
+
 === Development Tools
 - `spring` instead of `bundle exec` to keep a background copy of rails running, and avoid startup time.
-- `unicorn` starts of a development server (instead of Webrick).
+- `unicorn` starts off a development server (instead of Webrick).
 

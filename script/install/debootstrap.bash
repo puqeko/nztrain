@@ -17,7 +17,8 @@ do
     esac
 done
 
-SUITE=precise
+SUITE=xenial
+
 
 new_debootstrap=false
 
@@ -83,8 +84,8 @@ chroot "$ISOLATE_ROOT" apt-get install build-essential # C/C++ (g++, gcc)
 echo "$chroot_install ruby"
 chroot "$ISOLATE_ROOT" apt-get install ruby # Ruby (ruby)
 
-echo "$chroot_install ghc6"
-chroot "$ISOLATE_ROOT" apt-get install ghc6 # Haskell (ghc)
+echo "$chroot_install ghc"
+chroot "$ISOLATE_ROOT" apt-get install ghc # Haskell (ghc)
 
 echo "$chroot_install default-jdk"
 chroot "$ISOLATE_ROOT" apt-get install default-jdk # Java
@@ -139,25 +140,25 @@ if [ ! -f "$ISOLATE_ROOT/usr/bin/cint.rb" ] ; then
   $cmd
 fi
 
-# gcc 4.9.3 on Precise (will not be needed when we use trusty tahr)
+# gcc 9
 echo "$chroot_cmd add-apt-repository ppa:ubuntu-toolchain-r/test -y"
 chroot "$ISOLATE_ROOT" add-apt-repository ppa:ubuntu-toolchain-r/test -y
 
 echo "$chroot_cmd apt-get update"
 chroot "$ISOLATE_ROOT" apt-get update
 
-echo "$chroot_cmd apt-get install gcc-4.9"
-chroot "$ISOLATE_ROOT" apt-get install gcc-4.9
+echo "$chroot_cmd apt-get install gcc-9"
+chroot "$ISOLATE_ROOT" apt-get install gcc-9
 
-echo "$chroot_cmd apt-get install g++-4.9"
-chroot "$ISOLATE_ROOT" apt-get install g++-4.9
+echo "$chroot_cmd apt-get install g++-9"
+chroot "$ISOLATE_ROOT" apt-get install g++-9
 
-echo "$chroot_cmd update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 75"
-chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 75
+echo "$chroot_cmd update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 75"
+chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 75
 
-echo "$chroot_cmd update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 75"
-chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 75
-# gcc 4.9.3 done
+echo "$chroot_cmd update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 75"
+chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 75
+# gcc 9 done
 
 # let user know that chroot installs are finished
 

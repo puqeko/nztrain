@@ -43,6 +43,7 @@ class ProblemsController < ApplicationController
       @problem = Problem.new
       @problems = Problem.score_by_user(current_user.id).select('*')
     end
+    @problems = @problems.order(id: :desc)
     authorize @problem, :update?
 
     @problems_presenter = ProblemPresenter::Collection.new(@problems).permit!(*visible_attributes)
@@ -248,6 +249,14 @@ class ProblemsController < ApplicationController
       format.html { redirect_to(problems_url) }
       format.xml  { head :ok }
     end
+  end
+
+  # Remove the current problem from the selected problem set and refresh the page
+  def remove_from_problem_set
+    problem_set = ProblemSet.find(params[:problem_set_id])
+    @problem = Problem.find(params[:id])
+    problem_set.problems.delete(@problem)
+    redirect_to(@problem, :notice => "Removed from the '#{problem_set.name}' problem set.")
   end
 
   private

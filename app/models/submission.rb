@@ -13,7 +13,7 @@ class Submission < ActiveRecord::Base
   validates :source, :presence => true
   validate do |submission|
     errors.add :language_id, "Invalid language specified" if submission.language.nil?
-    errors.add :language_id, "Cannot use protected language" unless Language.submission_options.values.include?(submission.language_id)
+    errors.add :language_id, "Cannot use protected language" unless Language.all_submission_options.values.include?(submission.language_id)
   end
 
   # ranked: default - submission may be ranked

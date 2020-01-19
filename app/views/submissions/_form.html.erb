@@ -13,9 +13,9 @@
   <% end %>
   <div class="field">
     <%= f.label :language_id %><br>
-    <%= f.select :language_id, Language.submission_options %>
+    <%= f.select :language_id, grouped_options_for_select(Language.all_grouped_submission_options, f.object.language_id || @current_user.default_language_id || Language.default) %>
   </div>
-  <div class="field">
+  <div class="field"
     <%= f.label :source %><br>
     <%= f.file_field :source %>
   </div>

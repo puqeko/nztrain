@@ -93,6 +93,10 @@ class Language < ActiveRecord::Base
     }
   end
 
+  def self.default
+    Language.where(identifier: %w[c++17]).first.id
+  end
+
   def self.infer(ext)
     case ext
     when *%w[.cpp]

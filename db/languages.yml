@@ -13,7 +13,7 @@ c++:
   :exe_extension: .exe
   :processes: 1
   :variants:
-    c++03:  # depreciated
+    c++03:  # deprecated
       :name: "C++03"
       :compiler: /usr/bin/g++
       :compiler_command: "%{compiler} --version | head -n 1 1>&2 && %{compiler} -std=gnu++03 -O2 -o %{output} %{source} -lm"
@@ -34,13 +34,13 @@ c:
   :lexer: c
   :compiled: yes
   :interpreted: no
-  :current: c99
+  :current: c11
   :extension: .c
   :source_filename: program
   :exe_extension: .exe
   :processes: 1
   :variants:
-    c99: # depreciated
+    c99: # deprecated
       :name: C99
       :compiler: /usr/bin/gcc
       :compiler_command: "%{compiler} --version | head -n 1 1>&2 && %{compiler} -std=gnu99 -O2 -o %{output} %{source} -lm"

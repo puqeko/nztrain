@@ -60,7 +60,7 @@ class Language < ActiveRecord::Base
 
   def self.current_submission_options
     # order here is the display order
-    current_identifiers = ["c++", "c", "python", "java", "haskell", "ruby", "j"]
+    current_identifiers = ["c++", "c", "csharp", "python", "java", "haskell", "ruby", "j"]
     current_langs = current_identifiers.map { |ident|
       current_id = LanguageGroup.where(identifier: ident).pluck(:current_language_id)
       current_lang = Language.where(:id => current_id)[0]

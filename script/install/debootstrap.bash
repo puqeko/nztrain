@@ -54,8 +54,8 @@ mount -o bind /proc "$ISOLATE_ROOT/proc"
 
 [ -z "$TRAVIS" ] && { # if not in Travis-CI
   # python ppa
-  echo "$chroot_cmd add-apt-repository ppa:fkrull/deadsnakes -y"
-  chroot "$ISOLATE_ROOT" add-apt-repository ppa:fkrull/deadsnakes -y
+  # echo "$chroot_cmd add-apt-repository ppa:fkrull/deadsnakes -y"
+  # chroot "$ISOLATE_ROOT" add-apt-repository ppa:fkrull/deadsnakes -y
 
   # ruby ppa
   echo "$chroot_cmd add-apt-repository ppa:brightbox/ruby-ng -y"
@@ -74,10 +74,6 @@ chroot "$ISOLATE_ROOT" apt-get install wget
 echo "$chroot_install software-properties-common"
 chroot "$ISOLATE_ROOT" apt-get install software-properties-common # provides add-apt-repository
 
-# only for <= 12.04
-echo "$chroot_install python-software-properties"
-chroot "$ISOLATE_ROOT" apt-get install python-software-properties # provides add-apt-repository
-
 echo "$chroot_install build-essential"
 chroot "$ISOLATE_ROOT" apt-get install build-essential # C/C++ (g++, gcc)
 
@@ -87,13 +83,34 @@ chroot "$ISOLATE_ROOT" apt-get install ruby # Ruby (ruby)
 echo "$chroot_install ghc"
 chroot "$ISOLATE_ROOT" apt-get install ghc # Haskell (ghc)
 
-echo "$chroot_install default-jdk"
-chroot "$ISOLATE_ROOT" apt-get install default-jdk # Java
+if ! chroot "$ISOLATE_ROOT" apt-cache show openjdk-11-jdk &>/dev/null; then
+  # add java ppa
+  echo "$chroot_cmd add-apt-repository ppa:openjdk-r/ppa -y"
+  chroot "$ISOLATE_ROOT" add-apt-repository ppa:openjdk-r/ppa -y
+
+  echo "$chroot_cmd apt-get update"
+  chroot "$ISOLATE_ROOT" apt-get update
+fi
+
+echo "$chroot_install openjdk-11-jdk"
+chroot "$ISOLATE_ROOT" apt-get install openjdk-11-jdk # Java
 
 [ -z "$TRAVIS" ] && { # if not in Travis-CI
 
-  echo "$chroot_install python3.4"
+  echo "$chroot_install python3.8"
+  
+  # if on older OS version
+  if [! chroot "$ISOLATE_ROOT" apt-cache show python3.4 &>/dev/null] || 
+     [! chroot "$ISOLATE_ROOT" apt-cache show python3.8 &>/dev/null]; then
+    echo "$chroot_install add-apt-repository ppa:deadsnakes/ppa"
+    chroot "$ISOLATE_ROOT" add-apt-repository ppa:deadsnakes/ppa
+    echo "$chroot_install apt update"
+    chroot "$ISOLATE_ROOT" apt update
+  fi
+  echo "$chroot_install apt-get install python3.4"
   chroot "$ISOLATE_ROOT" apt-get install python3.4 # Python 3.4
+  echo "$chroot_install apt-get install python3.8"
+  chroot "$ISOLATE_ROOT" apt-get install python3.8 # Python 3.8
 
   echo "$chroot_install ruby2.2"
   chroot "$ISOLATE_ROOT" apt-get install ruby2.2
@@ -162,3 +179,32 @@ chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g
 
 # let user know that chroot installs are finished
 
+# add C# with mono
+# https://www.mono-project.com/download/stable/#download-lin
+echo "Adding C# mono"
+. /etc/lsb-release
+if [[ $(lsb_release -rs) == "16.04" ]]; then
+  echo "$chroot_cmd apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
+  chroot "$ISOLATE_ROOT" apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  echo "$chroot_cmd apt install apt-transport-https ca-certificates"
+  chroot "$ISOLATE_ROOT" apt install apt-transport-https ca-certificates
+  echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | chroot "$ISOLATE_ROOT" tee /etc/apt/sources.list.d/mono-official-stable.list
+
+  echo "$chroot_cmd apt update"
+  chroot "$ISOLATE_ROOT" apt update
+  echo "$chroot_cmd apt install mono-complete"
+  chroot "$ISOLATE_ROOT" apt install mono-complete
+elif [[$(lsb_release -rs) == "18.04" ]]
+  echo "$chroot_cmd apt install gnupg ca-certificates"
+  chroot "$ISOLATE_ROOT" apt install gnupg ca-certificates
+  echo "$chroot_cmd apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF"
+  chroot "$ISOLATE_ROOT" apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | chroot "$ISOLATE_ROOT" tee /etc/apt/sources.list.d/mono-official-stable.list
+
+  echo "$chroot_cmd apt update"
+  chroot "$ISOLATE_ROOT" apt update
+  echo "$chroot_cmd apt install mono-complete"
+  chroot "$ISOLATE_ROOT" apt install mono-complete
+else
+  echo "I don't know how to install mono for your Ubuntu version. See https://www.mono-project.com/download/stable/#download-lin"
+fi

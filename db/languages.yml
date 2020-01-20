@@ -143,14 +143,22 @@ csharp:
   :name: CSharp
   :lexer: csharp
   :compiled: yes
-  :interpreted: no
+  :interpreted: yes
   :current: csharp
   :extension: .cs
   :source_filename: main
   :exe_extension: .exe
-  :processes: 0
+  :processes: 3
+  :interpreter_command: '%{interpreter} %{output}'
   :variants:
     csharp8:
       :name: "C# 8.0"
+<<<<<<< HEAD
       :compiler: /usr/bin/csc;/usr/bin/mono
       :compiler_command: '%{compiler[0]} %{source} -optimize+ -out:%{output} -langversion:8.0 && %{compiler[1]} %{output}
+=======
+      :compiler: /usr/bin/csc
+      # Note: csc already prints the version number when executed
+      :compiler_command: '%{compiler} %{source} -optimize+ -out:%{output} -langversion:8.0'
+      :interpreter_command: /usr/bin/mono
+>>>>>>> e3cc9d5... Requires interpreter

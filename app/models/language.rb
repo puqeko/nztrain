@@ -51,54 +51,8 @@ class Language < ActiveRecord::Base
     {key => path}.merge Hash[(0...elements.size).map{|i|"#{key}[#{i}]".to_sym}.zip(elements)]
   end
 
-<<<<<<< HEAD
-  # def self.submission_options
-  #   latest = LanguageGroup.where(identifier: %w[c++ c python haskell java ruby j]).pluck(:current_language_id)
-  #   old = Language.where(identifier: %w[c++03]).pluck(:id)
-  #   languages = Language.where(:id => latest).order(:identifier) + Language.where(:id => old).order(:identifier)
-  #   Hash[languages.map{ |language| ["#{language.group.name} (#{language.name})", language.id] }]
-  # end
-
-  def self.current_submission_options
-    # order here is the display order
-    current_identifiers = ["c++", "c", "csharp", "python", "java", "haskell", "ruby", "j"]
-    current_langs = current_identifiers.map { |ident|
-      current_id = LanguageGroup.where(identifier: ident).pluck(:current_language_id)
-      current_lang = Language.where(:id => current_id)[0]
-      [current_lang.name, current_lang.id]
-    }
-    Hash[current_langs]
-  end
-
-  def self.other_submission_options
-    # will be ordered alphabetically
-    other_varients = ["c++14", "c++11", "c99", "python2"]
-    other_langs = other_varients.map { |vari|
-      current_lang = Language.where(:identifier => vari)[0]
-      [current_lang.name, current_lang.id]
-    }
-    other_langs.sort_by {|ele| ele[0]}
-    Hash[other_langs]
-  end
-
   # for validating submissions
   def self.all_submission_options
-    current_submission_options + other_submission_options
-  end
-
-  # for the selection drop down
-  def self.all_grouped_submission_options
-    {
-      "Current" => current_submission_options,
-      "Other" => other_submission_options
-    }
-  end
-
-  def self.default
-    Language.where(identifier: %w[c++17]).first.id
-=======
-  # for validating submissions
-  def self.submission_options
     grouped_submission_options.values.reduce(:merge)
   end
 
@@ -115,7 +69,6 @@ class Language < ActiveRecord::Base
 
   def self.default
     LanguageGroup.find_by(identifier: 'c++').current_language
->>>>>>> deployed
   end
 
   def self.infer(ext)

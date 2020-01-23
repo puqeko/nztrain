@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#!/bin/bash
 
 # This script does two things
 #   - Redirects errors from stdout to stderr so that nztrain knows when compilation fails

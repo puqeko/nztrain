@@ -100,6 +100,7 @@ chroot "$ISOLATE_ROOT" apt-get install openjdk-11-jdk # Java
 
 [ -z "$TRAVIS" ] && { # if not in Travis-CI
 
+<<<<<<< HEAD
   echo "$chroot_install python3.8"
   
   # if on older OS version
@@ -111,6 +112,11 @@ chroot "$ISOLATE_ROOT" apt-get install openjdk-11-jdk # Java
     chroot "$ISOLATE_ROOT" apt update
   fi
   echo "$chroot_install apt-get install python3.4"
+=======
+  # echo "$chroot_install python"
+  # chroot "$ISOLATE_ROOT" apt-get install python # Python 2 (deprecated)
+  echo "$chroot_install python3.4"
+>>>>>>> add-csharp-core
   chroot "$ISOLATE_ROOT" apt-get install python3.4 # Python 3.4
   echo "$chroot_install python3.8"
   chroot "$ISOLATE_ROOT" apt-get install python3.8 # Python 3.8

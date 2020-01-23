@@ -13,7 +13,11 @@
   <% end %>
   <div class="field">
     <%= f.label :language_id %><br>
+<<<<<<< HEAD
     <%= f.select :language_id, grouped_options_for_select(Language.all_grouped_submission_options, f.object.language_id || Language.default) %>
+=======
+    <%= f.select :language_id, grouped_options_for_select(Language.grouped_submission_options, @submission.language_id) %>
+>>>>>>> deployed
   </div>
   <div class="field"
     <%= f.label :source %><br>

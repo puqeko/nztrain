@@ -40,7 +40,7 @@ c:
   :exe_extension: .exe
   :processes: 1
   :variants:
-    c99: # deprecated
+    c99:  # deprecated
       :name: C99
       :compiler: /usr/bin/gcc
       :compiler_command: "%{compiler} --version | head -n 1 1>&2 && %{compiler} -std=gnu99 -O2 -o %{output} %{source} -lm"
@@ -61,7 +61,11 @@ java:
   :processes: 0
   :variants:
     java6:
+<<<<<<< HEAD
       :name: Java 1.6  # deprecated
+=======
+      :name: Java 1.6  # deprecated (note: uses '-source 1.6', which will be removed in a future JDK release)
+>>>>>>> deployed
       :compiler: /usr/bin/javac;/usr/bin/jar
       :compiler_command: '%{compiler[0]} -version | head -n 1 1>&2 && %{compiler[0]} -O -source 1.6 -J-Xms16m -J-Xmx256m %{source} && %{compiler[1]} cfe %{output} Main -C %{source_dir} Main.class'
       :interpreter: /usr/bin/java
@@ -69,7 +73,11 @@ java:
     java11:
       :name: Java 11
       :compiler: /usr/bin/javac;/usr/bin/jar
+<<<<<<< HEAD
       :compiler_command: '%{compiler[0]} -version | head -n 1 1>&2 && %{compiler[0]} -O -J-Xms16m -J-Xmx256m %{source} && %{compiler[1]} cfe %{output} Main -C %{source_dir} Main.class'
+=======
+      :compiler_command: '%{compiler[0]} -version | head -n 1 1>&2 && %{compiler[0]} -O -source 11 -J-Xms16m -J-Xmx256m %{source} && %{compiler[1]} cfe %{output} Main -C %{source_dir} Main.class'
+>>>>>>> deployed
       :interpreter: /usr/bin/java
       :interpreter_command: '%{interpreter} -jar %{source}'
 haskell:
@@ -99,7 +107,11 @@ python:
   :interpreter_command: '%{interpreter} %{source}'
   :compiler_command: '%{interpreter} -m py_compile %{source}'
   :variants:
+<<<<<<< HEAD
     python2:  # deprecated - in late 2019 support for the Python 2 language ended
+=======
+    python2:  # deprecated - Python 2 reached end-of-life in late 2019
+>>>>>>> deployed
       :name: "Python 2.7"
       :interpreter: /usr/bin/python2
     python3.4:  # deprecated
@@ -138,6 +150,7 @@ j:
     j8:
       :name: "J 8.0.3"
       :interpreter: /usr/bin/ijconsole-8.0.3
+<<<<<<< HEAD
 
 csharp:
   :name: CSharp
@@ -162,3 +175,5 @@ csharp:
       :compiler_command: '%{compiler} %{source} -optimize+ -out:%{output} -langversion:8.0'
       :interpreter_command: /usr/bin/mono
 >>>>>>> e3cc9d5... Requires interpreter
+=======
+>>>>>>> deployed

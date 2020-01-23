@@ -12,7 +12,11 @@
 <%= form_for @submission, :html => {:multipart => true}, :url => submit_problem_path(@problem) do |f| %>
   <div class="subfield">
     Language: 
+<<<<<<< HEAD
     <%= f.select :language_id, grouped_options_for_select(Language.all_grouped_submission_options, f.object.language_id || Language.default) %>
+=======
+    <%= f.select :language_id, grouped_options_for_select(Language.grouped_submission_options, @submission.language_id || Language.default.id) %>
+>>>>>>> deployed
   </div>
   <div class="field">
     Source file: 
@@ -30,8 +34,13 @@
   <%= form_for @submission, :url => submit_problem_path(@problem) do |f| %>
     <div class="subfield">
       Language: 
+<<<<<<< HEAD
       <%= f.select :language_id, grouped_options_for_select(Language.all_grouped_submission_options, f.object.language_id || Language.default) %>
       </div>
+=======
+      <%= f.select :language_id, grouped_options_for_select(Language.grouped_submission_options, @submission.language_id || Language.default.id) %>
+    </div>
+>>>>>>> deployed
     <div class="subactions">
       <%= f.submit 'Submit' %>
     </div>

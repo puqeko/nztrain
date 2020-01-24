@@ -34,7 +34,7 @@ if [[ "$ISOLATE_ROOT" != "/" ]] && [[ ! -d "$ISOLATE_ROOT" ]]; then
   # add sources
   echo deb http://archive.ubuntu.com/ubuntu/ $SUITE-updates main restricted >> /srv/chroot/nztrain/etc/apt/sources.list
   echo deb http://archive.ubuntu.com/ubuntu/ $SUITE universe >> /srv/chroot/nztrain/etc/apt/sources.list
-  echo deb http://security.ubuntu.com/ubuntu $SUITE-security main restricted >> /srv/chroot/nztrain/etc/apt/sources.list
+  echo deb http://security.ubuntu.com/ubuntu $SUITE-security main restricted universe >> /srv/chroot/nztrain/etc/apt/sources.list
   echo deb http://nz.archive.ubuntu.com/ubuntu/ $SUITE multiverse >> /srv/chroot/nztrain/etc/apt/sources.list
   echo deb-src http://nz.archive.ubuntu.com/ubuntu/ $SUITE multiverse >> /srv/chroot/nztrain/etc/apt/sources.list
   echo deb http://nz.archive.ubuntu.com/ubuntu/ $SUITE-updates multiverse >> /srv/chroot/nztrain/etc/apt/sources.list
@@ -229,7 +229,10 @@ chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g
   chroot "$ISOLATE_ROOT" chmod +x "/usr/bin/csr"
 
   set +x
+<<<<<<< HEAD
   echo ".Net Core Installed"
+=======
+>>>>>>> add-csharp-core
 }
 
 # let user know that chroot installs are finished

@@ -136,7 +136,7 @@ j:
   :interpreter_command: '%{interpreter} %{source}'
   :variants:
     j8:
-      :name: "J 8.0.3"
+      :name: "J 8.03"
       :interpreter: /usr/bin/ijconsole-8.0.3
 
 csharp:
@@ -147,6 +147,7 @@ csharp:
   :current: csharp8
   :extension: .cs
   :source_filename: program
+  :exe_extension: .exe
   :processes: 10
   :interpreter: /usr/bin/csr  # custom shell script
   :variants:

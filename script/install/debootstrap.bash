@@ -195,22 +195,22 @@ chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g
 
   : Downloading package info from Microsoft
   UBUNTU_VERSION=$(lsb_release --release --short)
-  wget -q "https://packages.microsoft.com/config/ubuntu/${UBUNTU_VERSION}/packages-microsoft-prod.deb" -O packages-microsoft-prod.deb
-  dpkg -i packages-microsoft-prod.deb
-  rm packages-microsoft-prod.deb
-  ["$UBUNTU_VERSION" == "18.04"] && sudo add-apt-repository universe
-  apt-get install -y apt-transport-https
-  apt-get update
+  chroot "$ISOLATE_ROOT" wget -q "https://packages.microsoft.com/config/ubuntu/${UBUNTU_VERSION}/packages-microsoft-prod.deb" -O packages-microsoft-prod.deb
+  chroot "$ISOLATE_ROOT" dpkg -i packages-microsoft-prod.deb
+  chroot "$ISOLATE_ROOT" rm packages-microsoft-prod.deb
+  [ "$UBUNTU_VERSION" == "18.04" ] && chroot "$ISOLATE_ROOT" sudo add-apt-repository universe
+  chroot "$ISOLATE_ROOT" apt-get install -y apt-transport-https
+  chroot "$ISOLATE_ROOT" apt-get update
 
   : Installing dotnet 3.1
-  apt-get install -y dotnet-sdk-3.1
+  chroot "$ISOLATE_ROOT" apt-get install -y dotnet-sdk-3.1
 
   : Creating runtime config file
   # The dotnet command will not execute the compiled .exe unless there is a config file
   # which tells it what runtime framework to use.
   # https://stackoverflow.com/questions/46065777/is-it-possible-to-compile-a-single-c-sharp-code-file-with-the-net-core-roslyn-c
 
-  RUNTIME_CONFIG_PATH="/usr/share/dotnet-config.json"  # used in the compile command
+  RUNTIME_CONFIG_PATH="$ISOLATE_ROOT/usr/share/dotnet-config.json"  # used in the compile command
   RUNTIME_CONFIG_TEMPL="script/csharp/dotnet-config-template.json"
 
   # referenced in RUNTIME_CONFIG_TEMPL file
@@ -220,13 +220,13 @@ chroot "$ISOLATE_ROOT" update-alternatives --install /usr/bin/g++ g++ /usr/bin/g
 
   : Moving shell scripts into place
   
-  cp "script/csharp/compile-command.sh" "/usr/local/csc.sh"
-  ln "/usr/local/csc.sh" "/usr/bin/csc"
-  chmod +x "/usr/bin/csc"
+  cp "script/csharp/compile-command.sh" "$ISOLATE_ROOT/usr/local/csc.sh"
+  chroot "$ISOLATE_ROOT" ln "/usr/local/csc.sh" "/usr/bin/csc"
+  chroot "$ISOLATE_ROOT" chmod +x "/usr/bin/csc"
 
-  cp "script/csharp/run-command.sh" "/usr/local/csr.sh"
-  ln "/usr/local/csr.sh" "/usr/bin/csr"
-  chmod +x "/usr/bin/csr"
+  cp "script/csharp/run-command.sh" "$ISOLATE_ROOT/usr/local/csr.sh"
+  chroot "$ISOLATE_ROOT" ln "/usr/local/csr.sh" "/usr/bin/csr"
+  chroot "$ISOLATE_ROOT" chmod +x "/usr/bin/csr"
 
   set +x
   echo ".Net Core Installed"
